@@ -1,0 +1,79 @@
+{% load static %}
+ <!-- BEGIN: Main Menu-->
+ <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
+    <div class="navbar-header">
+        <ul class="nav navbar-nav flex-row">
+            <li class="nav-item mr-auto"><a class="navbar-brand" href="{% url 'home' %}">
+                    <div class="brand-logo">
+                        <img src="{% static '/app-assets/images/logo/parking.png' %}" alt="" width="50" height="50" style="padding: 5px;">
+                    </div>
+                </a>
+            </li>
+            <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="bx bx-x d-block d-xl-none font-medium-4 primary"></i><i class="toggle-icon bx bx-disc font-medium-4 d-none d-xl-block primary" data-ticon="bx-disc"></i></a></li>
+        </ul>
+    </div>
+    <div class="shadow-bottom"></div>
+    <div class="main-menu-content">
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
+            {% if request.user.type_user != '3' or request.user.is_admin  %} 
+            {% url 'home' as Url %} 
+            <li {% if request.path == Url  %} class="nav-item active"  {% else  %}  class="nav-item"   {% endif %}>
+                <a href="{% url 'home' %}"><i class="fa fa-home"></i><span class="menu-title text-truncate" data-i18n="Dashboard">
+                    Inicio</span>
+                </a>
+            </li>
+            {% endif %}
+            <li class=" nav-item"><a href="#"><i class="fa fa-car" data-icon="notebook"></i><span class="menu-title text-truncate" data-i18n="Invoice">Vehiculos</span></a>
+                <ul class="menu-content">
+                    {% url 'vehicles_list' as Url %} {% url 'vehicles_list' as Url %} 
+                    <li {% if request.path == Url  %}  class="nav-item active"  {% else  %} class="nav-item" {% endif %} ><a class="d-flex align-items-center" href="{% url 'vehicles_list'  %}"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice List">Vehiculos Lista</span></a>
+                    </li>
+                    {% if request.user.type_user != '3' or request.user.is_admin  %}     
+                        {% url 'vehicles_new_admin' as Url %} 
+                        <li {% if request.path == Url  %}  class="nav-item active"{% else  %} class="nav-item" {% endif %} ><a class="d-flex align-items-center" href="{% url 'vehicles_new_admin'  %}"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice">Crear Vehiculo</span></a>
+                        </li>
+                    {% else %}
+                        {% url 'vehicles_new' as Url %} 
+                        <li {% if request.path == Url  %}  class="nav-item active"{% else  %} class="nav-item" {% endif %} ><a class="d-flex align-items-center" href="{% url 'vehicles_new'  %}"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice">Crear Vehiculo</span></a>
+                        </li> 
+                    {% endif %}                                            
+                </ul>
+            </li>
+            {% if request.user.type_user != '3' or request.user.is_admin  %}     
+          
+            <li class=" nav-item"><a href="#"><i class="fa fa-user" data-icon="notebook"></i><span class="menu-title text-truncate" data-i18n="Invoice">Empleados</span></a>
+                <ul class="menu-content">
+                    {% url 'employees_list' as Url %} 
+                    <li {% if request.path == Url  %}  class="nav-item active"  {% else  %} class="nav-item" {% endif %} ><a class="d-flex align-items-center" href="{% url 'employees_list'  %}"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice List">Empleados Lista</span></a>
+                    </li>
+                    {% url 'employees_new' as Url %} 
+                    <li  {% if request.path == Url  %}  class="nav-item active"  {% else  %} class="nav-item" {% endif %}><a class="d-flex align-items-center" href="{% url 'employees_new'  %}"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice">Crear Empleado</span></a>
+                    </li>
+                </ul>
+            </li>
+            {% endif %}  
+            {% if request.user.type_user != '3' or request.user.is_admin  %}   
+            <li class=" nav-item"><a href="#"><i class="fa fa-user" data-icon="notebook"></i><span class="menu-title text-truncate" data-i18n="Invoice">Celdas</span></a>
+                <ul class="menu-content">
+                    {% url 'cell_list' as Url %} 
+                    <li {% if request.path == Url  %}  class="nav-item active"  {% else  %} class="nav-item" {% endif %} ><a class="d-flex align-items-center" href="{% url 'cell_list'  %}"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice List">Celdas Lista</span></a>
+                    </li>
+                    {% url 'cell_new' as Url %} 
+                    <li  {% if request.path == Url  %}  class="nav-item active"  {% else  %} class="nav-item" {% endif %}><a class="d-flex align-items-center" href="{% url 'cell_new'  %}"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice">Crear Celda</span></a>
+                    </li>
+                   
+                </ul>
+            </li>
+            {% endif %} 
+            {% if request.user.type_user != '3' or request.user.is_admin  %} 
+            {% url 'report' as Url %} 
+            <li {% if request.path == Url  %} class="nav-item active"  {% else  %}  class="nav-item"   {% endif %}>
+                <a href="{% url 'report' %}"> <i class="fa fa-print"></i><span class="menu-title text-truncate" data-i18n="Dashboard">
+                    Reporte</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+<!-- END: Main Menu-->

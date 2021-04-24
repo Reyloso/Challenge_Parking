@@ -1,0 +1,112 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static '/app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static '/app-assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static '/app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css">
+{% endblock %}
+{% block content %}
+ <!-- Zero configuration table -->
+ <section id="basic-datatable">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <h4 class="card-title">Listado de Empleados</h4>
+                    </div>
+                    
+                <div class="col-lg-8 col-md-8 col-sm-12 d-flex justify-content-end">
+                    <a href="#" type="button" class="btn btn-success">
+                        <i class="fa fa-plus-square" ></i>
+                        Nuevo empleado
+                    </a>
+                </div>
+                </div>
+                <div class="card-body card-dashboard">
+                    <p class="card-text">
+                        En esta sección encontraras la lista de todos empleados de la empresa
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table zero-configuration">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Tipo documento</th>
+                                    <th>N° doc</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>phone</th>
+                                    <th>Estado</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in employees %}
+                                <tr>
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.type_document.initials }}</td>
+                                    <td>{{ item.document }}</td>
+                                    <td>{{ item.name }}</td>
+                               
+                                    <td>{{ item.surnames }}</td>
+                                    <td>{{ item.phone }}</td>
+                                    <td>{% if item.is_active %} 
+                                        <a href="#" type="button" class="btn btn-success">Activo</a> 
+                                        {% else %} 
+                                        <a href="#" type="button" class="btn btn-danger">Inactivo</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <span class="bx bx-dots-vertical-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                                            </span>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="{% url 'employees_update' item.id %}"><i class="bx bx-edit-alt mr-1"></i> Editar</a>
+                                                <a class="dropdown-item" href="{% url 'employees_delete' item.id %}"><i class="bx bx-trash mr-1"></i> Eliminar</a>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Tipo documento</th>
+                                    <th>N° doc</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>phone</th>
+                                    <th>Estado</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/ Zero configuration table -->
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'app-assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js"></script>
+    <script src="{% static 'app-assets/vendors/js/tables/datatable/vfs_fonts.js' %}"></script>
+    <script >
+        $(document).ready(function() {
+            $('.zero-configuration').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+                },
+                responsive: true
+                
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+<div class="content-body">
+    <!-- block examples section start -->
+    <section id="block-examples">
+        <div class="row match-height">
+            {% for cell  in cells %}
+            <div class="col-md-4 col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <h2> {{cell.name}} </h2>
+                            <p>{{cell.get_type_cell_display}}</p>
+                            {% if cell.num_vehicles == 0 %}
+                            <a href="{% url 'cell_select' cell.id %}" class="btn btn-lg btn-block font-medium-1 btn-light-primary mb-1 block-element text-nowrap">
+                                ACTIVA
+                            </a>
+                            {% else %}
+                            <a href="{% url 'cell_enable' cell.id %}" class="btn btn-lg btn-block font-medium-1 btn-light-danger mb-1 block-msg-animation text-nowrap">
+                                OCUPADA
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <!-- block examples section end -->
+</div>
+{% endblock %}

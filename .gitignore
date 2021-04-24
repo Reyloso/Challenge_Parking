@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+.env
+/core/migrations
+/parking/migrations
+/employees/migrations
+
+/files/vehicles

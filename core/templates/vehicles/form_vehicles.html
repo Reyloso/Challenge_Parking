@@ -1,0 +1,214 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block extra_css %}
+{% endblock %}
+{% block content %}
+<br>
+<section id="basic-vertical-layouts">
+    <div class="row match-height">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    {% if obj %}
+                    <h4 class="card-title">Editar {{ titulo }}</h4>
+                    {% else %}
+                    <h4 class="card-title">Crear {{ titulo }}</h4>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" autocomplete="off" class="form form-vertical">
+                        {% csrf_token %}
+                        <div class="form-body">
+                            {% if form.errors %}
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ field.label }}</strong><span> {{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endif %}                                
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">Foto</label>
+                                        <input type="file"  name="photo" id="photo" value="{% if obj %} {{ obj.photo }} {% endif %}" class="form-style" accept="image/*" >
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.photo.errors %}
+                                                {% for error in form.photo.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small> 
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="custom-file">
+                                           <div class="container"> {% if obj %}<img src="{{ obj.photo.url }}" width="100"> {% endif %}</div>
+                                           <label class="control-label" for="">Imagen Actual</label>
+                                        </div>
+                                    </div>
+                                 </div>          
+                                 {% if request.user.type_user != '3' or request.user.is_admin %}                                                 
+                                 <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">Propietario</label>
+                                        {{ form.employee }}
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.employee.errors %}
+                                                {% for error in form.employee.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+                                {% endif %}   
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">Tipo de vehiculo</label>
+                                        <select class="select2 form-control" id="type_vehicle" name="type_vehicle">
+                                            <option {% if obj.type_vehicle == '1' %} selected="selected"{% endif %} value="1">AUTOMOVIL</option>
+                                            <option {% if obj.type_vehicle == '2' %} selected="selected"{% endif %} value="2">MOTOCICLETA</option>
+                                            <option {% if obj.type_vehicle == '3' %} selected="selected"{% endif %} value="3" >BICICLETA</option>
+                                        </select>
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.type_vehicle.errors %}
+                                                {% for error in form.type_vehicle.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">Capacidad del cilindro </label>
+                                        <input id="cylinder_capacity" type="text" name="cylinder_capacity" value="{% if obj.cylinder_capacity %}{{ obj.cylinder_capacity }}{% endif %}" class="form-control" placeholder="Escribir la capacidad del cilindraje">
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.cylinder_capacity.errors %}
+                                                {% for error in form.cylinder_capacity.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">Tiempos</label>
+                                        <input id="gears" type="number" name="gears" value="{% if obj %}{{ obj.gears }}{% endif %}" class="form-control">
+
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.gears.errors %}
+                                                {% for error in form.gears.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">Modelo del vehiculo</label>
+                                        <input id="vehicle_model" type="text" name="vehicle_model" value="{% if obj.vehicle_model %}{{ obj.vehicle_model }}{% endif %}" class="form-control">
+
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.vehicle_model.errors %}
+                                                {% for error in form.vehicle_model.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+    
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">Numero de puertas</label>
+                                        <input id="doors_number" type="number" name="doors_number" value="{% if obj.doors_number %}{{ obj.doors_number }}{% endif %}" class="form-control">
+
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.doors_number.errors %}
+                                                {% for error in form.doors_number.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">Matricula del vehiculo</label>
+                                        <input id="vehicle_registration_number" type="text" name="vehicle_registration_number" value="{% if obj.vehicle_registration_number %}{{ obj.vehicle_registration_number }}{% endif %}" class="form-control">
+
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.vehicle_registration_number.errors %}
+                                                {% for error in form.vehicle_registration_number.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-sm-12">
+                                    <div class="custom-control custom-switch custom-switch-success mr-2 mb-1">
+                                        <p class="mb-0">Estado</p>
+                                       
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="status" id="status" value="True" {% if obj.status %} checked {% endif %}>
+                                            <label class="form-check-label" for="exampleRadios1">
+                                              Activo
+                                            </label>
+                                          </div>
+                                          <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="status" id="status" value="False" {% if obj.status == False %} checked {% endif %}>
+                                            <label class="form-check-label" for="exampleRadios2">
+                                              Inactivo
+                                            </label>
+                                          </div>
+                                            <small class="form-control-feedback" style="color: red;">
+                                                {% if form.status.errors %}
+                                                    {% for error in form.status.errors %}
+                                                        {{ error|escape }}
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </small> 
+                                    
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.status.errors %}
+                                                {% for error in form.status.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary mr-1">Guardar</button>
+                                    <a href="{{ list_url }}" class="btn btn-light-secondary">Cancelar</a>                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="{% static 'app-assets/js/jquery.min.js' %}"></script>
+<!-- se usa javascript para bloquear los campos dependiendo el tipo de vehiculo -->
+<script src="{% static 'app-assets/js/parking/vehicle.js' %}"></script>
+{% endblock %}
+{% block extra_js %}
+{% endblock %}

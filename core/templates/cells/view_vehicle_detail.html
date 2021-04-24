@@ -1,0 +1,128 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css">
+{% endblock %}
+{% block content %}
+<section class="invoice-view-wrapper">
+    <div class="row">
+        <!-- invoice view page -->
+        <div class="col-xl-12 col-md-12 col-12">
+            <div class="card invoice-print-area">
+                <div class="card-body pb-0 mx-25">
+                    <!-- header section -->
+                    <div class="row">
+                        <div class="col-lg-4 col-md-12">
+                            <span class="invoice-number mr-50">Matricula #</span>
+                            <span>{{vehicle.vehicle_registration_number}}</span>
+                        </div>
+                        <div class="col-lg-8 col-md-12">
+                            <div class="d-flex align-items-center justify-content-lg-end flex-wrap">
+                                <div class="mr-3">
+                                    <small class="text-muted">Fecha de Registro:</small>
+                                    <span>{{vehicle.created_at}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- logo and title -->
+                    <div class="row my-2 my-sm-3">
+                        <div class="col-sm-6 col-12 text-center text-sm-left order-2 order-sm-1">
+                            <h4 class="text-primary">VEHICULO</h4>
+                            <span>{{vehicle.get_type_vehicle_display}}</span>
+                        </div>
+                        <div class="col-sm-6 col-12 text-center text-sm-right order-1 order-sm-2 d-sm-flex justify-content-end mb-1 mb-sm-0">
+                            <img src="{{ MEDIA_URL }}{{ vehicle.photo.url }}" alt="logo" height="100" width="164">
+                        </div>
+                    </div>
+                    <hr>
+                    <!-- invoice address and contact -->
+                    <div class="row invoice-info">
+                        <div class="col-sm-6 col-12 mt-1">
+                            <h6 class="invoice-from">Propietario</h6>
+                            <div class="mb-1">
+                                <span>{{vehicle.employee.get_full_name}}.</span>
+                            </div>
+                            <div class="mb-1">
+                                <span>Telefono: {{vehicle.employee.phone}}</span>
+                            </div>
+                            <div class="mb-1">
+                                <span>Tipo de documento: {{vehicle.employee.type_document.initials}}</span>
+                            </div>
+                            <div class="mb-1">
+                                <span>N° documento: {{vehicle.employee.document}}</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-12 mt-1">
+                            <h6 class="invoice-to">Vehiculo</h6>
+                            <div class="mb-1">
+                                <span>Matricula: {{vehicle.vehicle_registration_number}}</span>
+                            </div>
+                            <div class="mb-1">
+                                <span>Cilindraje: {% if vehicle.type_vehicle != '2' %} No Aplica {% else %} {{vehicle.cylinder_capacity}} {% endif %}</span>
+                            </div> 
+                            <div class="mb-1">
+                                <span>Tiempos: {% if vehicle.type_vehicle != '2' %} No Aplica {% else %} {{vehicle.gears}} {% endif %}</span>
+                            </div>
+                            <div class="mb-1">
+                                <span>Puertas: {% if vehicle.type_vehicle != '1' %} No Aplica {% else %} {{vehicle.doors_number}} {% endif %}</span>
+                            </div>
+                            <div class="mb-1">
+                                <span>Modelo: {% if vehicle.type_vehicle != '1' %} No Aplica {% else %} {{vehicle.vehicle_model}} {% endif %}</span>
+                            </div>
+                            <div class="mb-1">
+                                <span>Estado : {% if vehicle.status %} Activo {% else %} Inactivo {% endif %} </span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <!-- product details table-->
+                <div class="container"> 
+                    <div class="tabla table-responsive">
+                        <table id="table" class="table">
+                            <thead>
+                                <tr class="border-0">
+                                    <th scope="col">Celda</th>
+                                    <th scope="col">Hora Entrada</th>
+                                    <th scope="col">Hora salida</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for entrada in entradas %}
+                                <tr>
+                                    <td>{{entrada.cell.name}}</td>
+                                    <td>{{entrada.created_at}}</td>
+                                    <td>{{entrada.updated_at}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- invoice subtotal -->
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'app-assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js"></script>
+    <script src="{% static 'app-assets/vendors/js/tables/datatable/vfs_fonts.js' %}"></script>
+    <script >
+        $(document).ready(function() {
+            $('#table').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+                },
+                responsive: true
+                
+            });
+        });
+    </script>
+{% endblock %}

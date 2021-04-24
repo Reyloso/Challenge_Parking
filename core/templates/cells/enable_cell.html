@@ -1,0 +1,68 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+<br>
+<section id="basic-vertical-layouts">
+    <div class="row match-height">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">{{title}} Celda {{obj.name}}</h4>
+                </div>
+                <form method="post"  enctype="multipart/form-data">
+                    <div class="page-header">
+                        <div class="container-fluid">
+                          <!-- <h2 class="h5 no-margin-bottom">{{ titulo }}</h2> -->
+                        </div>
+                      </div>
+                      <section class="no-padding-top no-padding-bottom">
+                        <div class="col-lg-12">
+                          <div class="block">
+                            <!-- <div class="title"><strong>Eliminar {{ titulo }}</strong></div> -->
+                            <div class="block-body">
+                              {% csrf_token %}
+                              <input type="hidden" name="action" value="{{ action }}">
+                              {% if message %}
+                              <div class="alert alert-dan alert-dismissible">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <h5><i class="icon fas fa-ban"></i> Ha ocurrido un error al {{title}} la celda</h5>
+                                  <ul>
+                                      <li>{{ message }}</li>
+                                  </ul>
+                              </div>
+                            {% endif %}
+                            {% if form_status %}
+                              <form class="form-horizontal">
+                                <div class="alert alert-success alert-dismissible">
+                                    <h5><i class="bx bxs-error"></i> Notificación!</h5>
+                                    ¿Estas seguro que desea {{title}} la Casilla?
+                                </div>
+                                
+                                <div class="line"></div>
+                                <div class="form-group row">
+                                    <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary mr-1">{{title}}</button>
+                                    <a href="{{ list_url }}" class="btn btn-light-secondary">Cancelar</a>
+                                  </div>
+                                </div>
+                              </form>
+                              {% else %}
+                              <div class="form-group row">
+                                <div class="col-12 d-flex justify-content-end">
+                                <a href="{% url 'home' %}" class="btn btn-light-secondary">Cancelar</a>
+                              </div>
+                              </div>
+                              
+                              {% endif %}
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+<div class="content-body">
+<section class="search-bar-wrapper">
+    <div class="search-bar">
+        <!-- input search -->
+        <form action="?" method="GET" class="form-search">
+            <fieldset class="page-search-input form-group position-relative">
+                <input type="search" class="form-control rounded-right form-control-lg shadow pl-2" id="searchbar" name="search" value="{{ search }}" placeholder="Buscar">
+            </br>
+                <button class="btn btn-primary search-btn rounded" type="submit">
+                    <span class="d-none d-sm-block">Buscar Vehiculo o Empleado</span>
+                    <i class="bx bx-search d-block d-sm-none"></i>
+                </button>
+            </br>
+            
+            </fieldset>
+        </form>
+        <!--/ input search -->
+    </div>
+</section>
+<div class="table-responsive">
+    <a href="{% url 'vehicles_new_admin' %}" class="btn btn-light-secondary search-btn rounded" type="submit">
+        <span class="d-none d-sm-block">Crear Vehiculo</span>
+        <i class="bx bx-search d-block d-sm-none"></i>
+    </a>
+    <table class="table zero-configuration">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Tipo de vehiculo</th>
+                <th>Propietario</th>
+                <th>Matricula</th>
+                <th>Ver</th>
+                <th>Asignar a casilla</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in vehicles %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.get_type_vehicle_display }}</td>
+                <td>{{ item.employee }}</td>
+                <td>{{ item.vehicle_registration_number }}</td>
+                <td>{{ item.vehicle_registration_number }}</td>
+                <td>
+                    <a class="btn btn-light-primary"  href="{% url 'vehicle_detail' item.id %}"><i class="bx bx-eye-alt mr-1"></i> Ver Detalle</a>
+                </td>
+                <td>
+                    <a class="btn btn-success"  href="{% url 'cell_assign' pk_cell=cell.id  pk_vehicle=item.id %}"><i class="bx bx-eye-alt mr-1"></i> Seleccionar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>id</th>
+                <th>Tipo de vehiculo</th>
+                <th>Propietario</th>
+                <th>Matricula</th>
+                <th>Ver</th>
+                <th>Asignar a casilla</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+</div>
+{% endblock %}

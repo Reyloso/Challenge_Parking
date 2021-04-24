@@ -1,0 +1,239 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block extra_css %}
+{% endblock %}
+{% block content %}
+<br>
+<section id="basic-vertical-layouts">
+    <div class="row match-height">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Información del empleado</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" autocomplete="off" class="form form-vertical">
+                        {% csrf_token %}
+                        <div class="form-body">
+                            {% if form.errors %}
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ field.label }}</strong><span>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endif %}                                
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">Tipo de Usuario</label>
+                                        {{ form.type_user }}
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.type_user.errors %}
+                                                {% for error in form.type_user.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">Tipo de documento</label>
+                                        {{ form.type_document }}
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.type_document.errors %}
+                                                {% for error in form.type_document.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="contact-info-vertical">N° de documento</label>
+                                        <input type="text" id="document" value="{% if obj %}{{ obj.document }}{% endif %}"  class="form-control" name="document" placeholder="Numero de documento del adquiriente">
+
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.document.errors %}
+                                                {% for error in form.document.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">Nombre</label>
+                                        <input id="name" type="text" name="name" value="{% if obj %}{{ obj.name }}{% endif %}" class="form-control" placeholder="Escribe aqui el nombre">
+
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.name.errors %}
+                                                {% for error in form.name.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+     
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">Apellidos</label>
+                                        <input id="surnames" type="text" name="surnames" value="{% if obj.surnames %}{{ obj.surnames }}{% endif %}" class="form-control" placeholder="Escribe aqui los apellidos">
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.surnames.errors %}
+                                                {% for error in form.surnames.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">Telefono Principal</label>
+                                        <input id="phone" type="text" name="phone" value="{% if obj %}{{ obj.phone }}{% endif %}" class="form-control">
+
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.phone.errors %}
+                                                {% for error in form.phone.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">Email</label>
+                                        <input id="email" type="email" name="email" value="{% if obj %} {{ obj.email }} {% endif %}" class="form-control">
+
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.email.errors %}
+                                                {% for error in form.email.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">nombre de usuario</label>
+                                        <input id="username" type="text" name="username" value="{% if obj %}{{ obj.username }}{% endif %}" class="form-control">
+
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.username.errors %}
+                                                {% for error in form.username.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+                                {% if obj  %}
+                                {% else %}
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">{{form.password1.label}}</label>
+                                        <!-- <input id="password1" type="password" name="password1" value="{% if obj %}{{ obj.password1 }}{% endif %}" class="form-control"> -->
+                                        {{ form.password1 }}
+                                        
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.password1.errors %}
+                                                {% for error in form.password1.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% if obj  %}
+                                {% else %}
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">{{form.password2.label}}</label>
+                                        {{ form.password2 }}
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.password2.errors %}
+                                                {% for error in form.password2.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="custom-control custom-switch custom-switch-success mr-2 mb-1">
+                                        <p class="mb-0">Esta activo</p>
+                                       <small>si esta inactivo este usuario no podrá iniciar sesion</small>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="is_active" id="is_active" value="True" {% if obj.is_active %} checked {% endif %}>
+                                            <label class="form-check-label" for="exampleRadios1">
+                                              Activo
+                                            </label>
+                                          </div>
+                                          <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="is_active" id="is_active" value="False" {% if obj.is_active == False %} checked {% endif %}>
+                                            <label class="form-check-label" for="exampleRadios2">
+                                              Inactivo
+                                            </label>
+                                          </div>
+                                            <small class="form-control-feedback" style="color: red;">
+                                                {% if form.is_active.errors %}
+                                                    {% for error in form.is_active.errors %}
+                                                        {{ error|escape }}
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </small> 
+                                    
+                                        <small class="form-control-feedback" style="color: red;">
+                                            {% if form.is_active.errors %}
+                                                {% for error in form.is_active.errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary mr-1">Guardar</button>
+                                    <a href="{% url 'employees_list' %}"class="btn btn-light-secondary">Cancelar</a>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- {{form.country}} -->
+            
+{% endblock %}
+{% block extra_js %}
+{% endblock %}
