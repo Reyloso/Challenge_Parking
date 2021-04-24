@@ -102,6 +102,9 @@ contraseña: qwerty123
 usuario: pablo
 contraseña: qwerty123
 ```
+## Nota 📄
+* Dentro del repositorio hay una carpeta con captures del aplicativo
+
 ## Construido con 🛠️
 
 * [Django](https://docs.djangoproject.com/en/2.2/) -  El framework web usado
