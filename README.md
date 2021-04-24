@@ -29,7 +29,11 @@ psycopg2 2.8.4 o superior
 ### Installation 🔧
 - Clonar el repositorio
 ```bash
-    git@github.com:Reyloso/parking_challenge.git
+    git@github.com:Reyloso/Challenge_Parking.git
+
+    o 
+
+    git clone https://github.com/Reyloso/Challenge_Parking
 
 # Crear entorno virtual y activar
 pip install virtualenv MiEntorno
