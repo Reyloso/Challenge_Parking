@@ -51,10 +51,10 @@ source activate
     pip install -r requierements.txt
 ```
 ## Configurar la Base de datos Posgres ⚙️
-- Modificar el archivo settings.py 
+- Modificar el archivo local_settings.py  que se encuentra en la carpeta parking_challenge
 - Reemplazar datos por los que tenga configurado en la base de datos
 ```bash
-# Primero crear la base de datos y luego cambiar los datos en el archivo settings.py
+# Primero crear la base de datos y luego cambiar los datos en el archivo local_settings.py
 
 DATABASES = {
      'default': {
